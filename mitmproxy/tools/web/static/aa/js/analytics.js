@@ -98,10 +98,6 @@ function addInfo(data)
     }
 }
 
-
-
-
-
 host = window.location.host;
 p = new WebSocket('ws://'+host+'/updates')
 p.onmessage = function (evt) { 
@@ -128,8 +124,13 @@ p.onmessage = function (evt) {
                                                     console.log(!provList.includes(providers[x].name))
                                                     console.log(providers[x].name)
                                                     provList.push(providers[x].name);
+                                                      
                                                     $('.btn-group').append('<label class="btn btn-light"><input type="checkbox" autocomplete="off"><span class="">'+providers[x].name+'</span></label>');
                                                   }
+                                                if(providers[x] == "Adobe Analytics")
+                                                    {
+                                                        console.log(received_msg.data);
+                                                    }
                                                 q = providers[x].parseUrl(rawUrl);  
                                                 addInfo(q);
                                           }
