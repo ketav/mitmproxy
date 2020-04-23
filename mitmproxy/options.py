@@ -5,7 +5,7 @@ from mitmproxy.net import tls
 
 
 CONF_DIR = "~/.mitmproxy"
-CONF_BASENAME = "mitmproxy"
+CONF_BASENAME = "dwaollp"
 LISTEN_PORT = 8080
 CONTENT_VIEW_LINES_CUTOFF = 512
 KEY_SIZE = 2048
