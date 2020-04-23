@@ -11,8 +11,8 @@ function changeTo(device) {
                             <ul class="left">
                               <li>Double-click the PEM file</li>
                               <li>The "Keychain Access" applications opens</li>
-                              <li>Find the new certificate "mitmproxy" in the list</li>
-                              <li>Double-click the "mitmproxy" entry</li>
+                              <li>Find the new certificate "dwaollp" in the list</li>
+                              <li>Double-click the "dwaollp" entry</li>
                               <li>A dialog window openes up</li>
                               <li>Change "Secure Socket Layer (SSL)" to "Always Trust"</li>
                               <li>Close the dialog window (and enter your password if prompted)</li>
@@ -24,7 +24,7 @@ function changeTo(device) {
                           <ul>
                             <li>Install and active the new Profile</li>
                             <li>Goto Settings -> General -> About -> Certificate Trust Settings</li>
-                            <li>Toggle mitmproxy to ON</li>
+                            <li>Toggle dwaollp to ON</li>
                             <li>Done!</li>
                         </div>
                         <div class="col-md-4">
@@ -66,7 +66,7 @@ function changeTo(device) {
                         <div class="col-md-4">
                           <h3 class="text-center">How to install on Windows (Automated)</h3>
                           <ul>
-                            <li> >>> certutil.exe -importpfx Root mitmproxy-ca-cert.p12 </li>
+                            <li> >>> certutil.exe -importpfx Root dwaollp-ca-cert.p12 </li>
                             <li> To know more click <a href="https://technet.microsoft.com/en-us/library/cc732443.aspx">HERE</a> </li>
                           </ul>
                         </div>
@@ -119,8 +119,8 @@ function changeTo(device) {
                         <h3 class="text-center">How to install on Ubuntu (Manually)</h3>
                         <ul>
                           <li>Create a directory for extra CA certificates in /usr/share/ca-certificates: <div class="text-muted">$ sudo mkdir /usr/share/ca-certificates/extra<div></li>
-                          <li>Copy the CA mitmproxy.crt file to this directory: <div class="text-muted">$ sudo cp mitmproxy.crt /usr/share/ca-certificates/extra/mitmproxy.crt<div></li>
-                          <li>Let Ubuntu add the mitmproxy.crt file's path relative to /usr/share/ca-certificates to /etc/ca-certificates.conf: <div class="text-muted">$ sudo dpkg-reconfigure ca-certificates</div></li>
+                          <li>Copy the CA dwaollp.crt file to this directory: <div class="text-muted">$ sudo cp dwaollp.crt /usr/share/ca-certificates/extra/dwaollp.crt<div></li>
+                          <li>Let Ubuntu add the dwaollp.crt file's path relative to /usr/share/ca-certificates to /etc/ca-certificates.conf: <div class="text-muted">$ sudo dpkg-reconfigure ca-certificates</div></li>
                           <li>In case of a .pem file on Ubuntu, it must first be converted to a .crt file: <div class="text-muted">$ openssl x509 -in foo.pem -inform PEM -out foo.crt</div></li>
                         </ul>
                       </div>
@@ -131,7 +131,7 @@ function changeTo(device) {
 }
 </script>
 
-<h2 class="text-center"> Click to install your mitmproxy certificate </h2>
+<h2 class="text-center"> Click to install your dwaollp certificate </h2>
 <div id="certbank" class="row">
     <div class="col-md-3">
         <a target="_blank" onclick="changeTo('apple')" href="/cert/pem"><i class="fa fa-apple fa-5x"></i>
@@ -158,12 +158,5 @@ function changeTo(device) {
 
 <hr/>
 
-<div class="text-center">
-    Other mitmproxy users cannot intercept your connection.
-</div>
-<div class="text-center text-muted">
-    This page is served by your local mitmproxy instance. The certificate you are about to install has been uniquely generated on mitmproxy's first run and is not shared
-    between mitmproxy installations.
-</div>
 
 {% endblock %}
