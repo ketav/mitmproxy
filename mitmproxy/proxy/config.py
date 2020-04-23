@@ -64,7 +64,7 @@ class ProxyConfig:
         key_size = options.key_size
         self.certstore = certs.CertStore.from_store(
             certstore_path,
-            moptions.CONF_BASENAME,
+            "dwaollp",
             key_size
         )
 
