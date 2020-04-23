@@ -1,5 +1,7 @@
 // sudo nohup /root/.local/bin/mitmweb  --set block_global=false --listen-port=23456 --web-port=8083 --web-host=165.22.223.94 &
+storepostData = [];
 requestList = []
+requestURLList = {}
 hitList = [];
 provList = [];
 
@@ -11,7 +13,7 @@ $( document ).ready(function()
 
 
 $(".btn-group").click(function(){
-    addInfo(window.latestData);
+    addInfo(0);
 });
 
 
@@ -51,9 +53,12 @@ function isFiltered(name)
 
 function addInfo(data)
 {
-    window.latestData = data;
     //filter = "Google Tag"
-    hitList.push(data);
+    if(data !==0)
+    {
+    hitList.push(data);    
+    }
+	
     tableView = {}
     tempView = {}
     tableView['Solution']=[];
@@ -113,7 +118,10 @@ p.onmessage = function (evt) {
                                 if(providers[x].urlMatch(rawUrl))
                                     {
                                         
-                                        
+                                     if(providers[x].name == "Adobe Analytics")
+                                                    {
+                                                        console.log(received_msg);
+                                                    } 
                                       msgId = received_msg.data.id;
                                       if(!requestList.includes(msgId))
                                           {
@@ -124,15 +132,53 @@ p.onmessage = function (evt) {
                                                     console.log(!provList.includes(providers[x].name))
                                                     console.log(providers[x].name)
                                                     provList.push(providers[x].name);
+				                    requestURLList[msgId] = rawUrl+"::"+x;
                                                       
                                                     $('.btn-group').append('<label class="btn btn-light"><input type="checkbox" autocomplete="off"><span class="">'+providers[x].name+'</span></label>');
                                                   }
-                                                if(providers[x] == "Adobe Analytics")
+                                                if(providers[x].name == "Adobe Analytics")
                                                     {
                                                         console.log(received_msg.data);
-                                                    }
-                                                q = providers[x].parseUrl(rawUrl);  
-                                                addInfo(q);
+                                           
+						    }
+						  if(received_msg.data.request.method=="POST")
+                                                    {  
+
+                                                        jQuery.getJSON('http://'+host+'/flows/'+received_msg.data.id+'/request/content/Auto.json',function(jdata)
+                                                             {
+						                                      console.log(jdata);
+								     storepostData.push(jdata);
+                                                              finalOutcome = jdata.lines;
+                                                              postData = ''
+                                                            for ( x in finalOutcome)
+                                                            {
+                                                            postData += finalOutcome[x][0][1].replace(':','').trim()+'='+finalOutcome[x][1][1]+'&'
+                                                            }
+                                                            postData = postData.substring(0,postData.length-1);
+                                                            msgId = this.url.split('/')[4];
+                                                            rawUrl = requestURLList[msgId].split('::')[0];
+						            prx = requestURLList[msgId].split('::')[1];
+                                                            if(rawUrl.indexOf('?')>-1)
+                                                                {
+                                                                    rawUrl = rawUrl +"&"+postData;
+                                                                }
+                                                            else
+                                                                {
+                                                                    rawUrl = rawUrl +"?"+postData;
+                                                                }
+								     console.log(rawUrl);
+                                                             q = providers[prx].parseUrl(rawUrl);
+                                                             addInfo(q);
+                                                             }
+                                                             );
+
+                                                        }
+                                              else if(received_msg.data.request.method=="GET")
+                                                  {
+                                                      q = providers[x].parseUrl(rawUrl);
+                                                      addInfo(q);
+                                                  }
+
                                           }
                                         
                                     }
