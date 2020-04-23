@@ -2,7 +2,7 @@ from mitmproxy.addons import wsgiapp
 from mitmproxy.addons.onboardingapp import app
 from mitmproxy import ctx
 
-APP_HOST = "mitm.it"
+APP_HOST = "dwao.proxy"
 APP_PORT = 80
 
 
