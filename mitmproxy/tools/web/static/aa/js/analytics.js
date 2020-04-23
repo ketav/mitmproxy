@@ -102,8 +102,8 @@ function addInfo(data)
 
 
 
-
-p = new WebSocket('ws://165.22.223.94:8083/updates')
+host = window.location.host;
+p = new WebSocket('ws://'+host+'/updates')
 p.onmessage = function (evt) { 
                   var received_msg = JSON.parse(evt.data);
                   if(received_msg.resource=='flows')
