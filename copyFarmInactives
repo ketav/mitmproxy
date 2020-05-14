@@ -1,0 +1,15 @@
+
+data = []
+$('.table-inactives').find("tr").each(function(i,k)
+{
+   if(i!=0)
+   {
+     distance = $($(k).find('td')[0]).text()
+     yx = $($(k).find('td')[1]).text().replace('(','').replace(')','').replace('|',',')
+     pop = $($(k).find('td')[5]).text().replace(" 0","").trim();
+     data.push(yx+","+distance+","+pop)
+   }
+}
+)
+
+JSON.stringify(data)
